@@ -11,7 +11,7 @@ export function DiscloseMenu({ question, answer }: DiscloseMenuProps): JSX.Eleme
     return (
         <div className="mx-auto rounded-2xl bg-white shadow">
             <Disclosure>
-                {({ open }) => {
+            {({ open }: { open: boolean }) => {
                     const animationStyle = useSpring({
                         from: { opacity: 0, height: 0 },
                         to: { opacity: open ? 1 : 0, height: open ? 'auto' : 0 },
