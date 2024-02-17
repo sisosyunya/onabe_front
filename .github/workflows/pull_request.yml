@@ -1,26 +1,31 @@
 name: CI
 on:
   push:
-    branches: [main] #mainブランチにpushされたとき
+    branches: [main] # mainブランチにpushされたとき
   pull_request:
-    branches: [main] 
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2 
+      - uses: actions/checkout@v2 # リポジトリをチェックアウト
       - name: Use NodeJS
-        uses: actions/setup-node@v1 
+        uses: actions/setup-node@v1 # Node.jsのセットアップ
         with:
-          node-version: "12.x"
+          node-version: "12.x" # 使用するNode.jsのバージョン
       - name: Cache node_modules
-        uses: actions/cache@v1
+        uses: actions/cache@v1 # node_modulesをキャッシュ
         with:
           path: ~/.npm 
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }} 
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-      - run: npm ci 
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1 # Codecovにカバレッジレポートをアップロード
         env:
-          CI: true 
+          token: ${{ secrets.CODECOV_TOKEN }} # Codecovのトークン
+          slug: sisosyunya/onabe_front
+      - run: npm ci # 依存関係のインストール
+        env:
+          CI: true
