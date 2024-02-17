@@ -14,4 +14,7 @@ export type answeredQuestion =  commonQuestionFields & {
 };
 
 // 未回答の質問
-export type unansweredQuestion =  commonQuestionFields;
+export type unansweredQuestion =  commonQuestionFields & {
+  answer: null,
+  answeredAt: null,
+};;
