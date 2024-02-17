@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState} from "react";
 // import { Link } from "react-router-dom";
 import wanko from "@/assets/wanko.svg";
 import prompt from "@/assets/prompt.svg";
-import { DiscloseMenu } from "../components/disclose_menu";
+import {DiscloseMenu} from "../components/disclose_menu";
+import useGetAllQuestions from "../customHooks/useGetAllQuestions";
 
 type FAQ = {
   question: string;
@@ -11,53 +12,8 @@ type FAQ = {
 
 export function TopPage(): JSX.Element {
   const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
   const [faqs, setFaqs] = useState<FAQ[]>([]);
-  const [defaultFaqs, setDefaultFaqs] = useState<FAQ[]>([]);
-
-  useEffect(() => {
-    (async () => {
-      // const res = await fetch("/api/faqs");
-      // const faqs = await res.json();
-      const faqs = [
-        {
-          question: "How to use this service?",
-          pageTitle: "how-to-use",
-        },
-        {
-          question: "How to register?",
-          pageTitle: "how-to-register",
-        },
-        {
-          question: "How to delete my account?",
-          pageTitle: "how-to-delete",
-        },
-        {
-          question: "How to change my email address?",
-          pageTitle: "how-to-change-email",
-        },
-        {
-          question: "How to change my password?",
-          pageTitle: "how-to-change-password",
-        },
-        {
-          question: "How to change my profile picture?",
-          pageTitle: "how-to-change-profile-picture",
-        },
-        {
-          question: "How to change my username?",
-          pageTitle: "how-to-change-username",
-        },
-        {
-          question: "How to change my date of birth?",
-          pageTitle: "how-to-change-date-of-birth",
-        },
-      ]
-      localStorage.setItem("faqs", JSON.stringify(faqs));
-      setDefaultFaqs(faqs.slice(0, 5));
-      setIsLoading(false);
-    })();
-  }, []);
+  const {allQuestions, loading} = useGetAllQuestions();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInput(e.target.value);
@@ -73,7 +29,7 @@ export function TopPage(): JSX.Element {
     setFaqs(filteredFaqs);
   };
 
-  if (isLoading) {
+  if (loading) {
     return <p>Loading...</p>;
   }
 
@@ -108,12 +64,15 @@ export function TopPage(): JSX.Element {
               Frequently Asked Questions
             </span>
             <ul className="pt-4 space-y-2">
-              {defaultFaqs.map(faq => (
+              {allQuestions.map(faq => (
                 <li
                   key={faq.question}
                   className=" text-lg text-[#2B546A] hover:bg-[#F6F6F7] rounded-md shadow-sm"
                 >
-                  <DiscloseMenu question={faq.question} answer={faq.pageTitle} />
+                  <DiscloseMenu
+                    question={faq.question}
+                    answer={faq.answer ?? "回答がありません。"}
+                  />
                 </li>
               ))}
             </ul>
@@ -133,7 +92,10 @@ export function TopPage(): JSX.Element {
                   >
                     {faq.question}
                   </Link> */}
-                  <DiscloseMenu question={faq.question} answer={faq.pageTitle} />
+                  <DiscloseMenu
+                    question={faq.question}
+                    answer={faq.pageTitle}
+                  />
                 </li>
               ))}
             </ul>
