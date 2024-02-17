@@ -98,7 +98,7 @@ export function TopPage(): JSX.Element {
             placeholder="Enter the keyword"
             data-test="search-input"
             className="w-full sm:w-[36rem] h-12 px-4 py-3 shadow outline-0"
-          ></input>
+          />
         </div>
       </div>
       <div className="mt-6 px-4 py-6 bg-white h-[calc(100%-12rem)] overflow-scroll shadow">
