@@ -27,15 +27,15 @@ const useGetAllUnansweredQuestions = () => {
     return url ? await fetchAPI(url) : allUnansweredQuestionMock;
   };
 
-  const updateAllAnsweredQuestions = async () => {
+  const updateAllUnansweredQuestions = async () => {
     setAllAnsweredQuestions(await getAllData());
   };
 
   useEffect(() => {
-    updateAllAnsweredQuestions();
-  }, [updateAllAnsweredQuestions]);
+    updateAllUnansweredQuestions();
+  }, [updateAllUnansweredQuestions]);
 
-  return { allAnsweredQuestions, updateAllAnsweredQuestions, loading };
+  return { allAnsweredQuestions, updateAllUnansweredQuestions, loading };
 };
 
 export default useGetAllUnansweredQuestions;
