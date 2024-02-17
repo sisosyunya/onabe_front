@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { unansweredQuestion } from "../type";
 import { allUnansweredQuestionMock } from "../mock";
 
-const url: string | null = null;
+const url: string | null = "http://3.112.223.9:8000/getall";
 
 const useGetAllUnansweredQuestions = () => {
   const [allAnsweredQuestions, setAllAnsweredQuestions] = useState<unansweredQuestion[]>([]);
@@ -31,9 +31,10 @@ const useGetAllUnansweredQuestions = () => {
     setAllAnsweredQuestions(await getAllData());
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     updateAllUnansweredQuestions();
-  }, [updateAllUnansweredQuestions]);
+  }, []);
 
   return { allAnsweredQuestions, updateAllUnansweredQuestions, loading };
 };
