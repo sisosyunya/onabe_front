@@ -5,6 +5,7 @@ import {TopPage} from "./pages/top.tsx";
 import {AnswerPage} from "./pages/answer.tsx";
 import {Layout} from "./components/layout.tsx";
 import "./index.css";
+import MakeAnswerPage from "./pages/makeAnswer.tsx";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: "/pages/:pageTitle",
         element: <AnswerPage />,
+      },
+      {
+        path: "/makeAnswer/:questionId",
+        element: <MakeAnswerPage />,
       },
     ],
   },
