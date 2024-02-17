@@ -4,7 +4,7 @@ const mockCreatedAt = new Date(2024, 0, 1);
 const mockAnsweredAt = new Date(2024, 1, 1);
 
 //全ての未回答の質問
-export const allUnansweredQuestion: unansweredQuestion[] = [
+export const allUnansweredQuestionMock: unansweredQuestion[] = [
   {
     id: "aaaaaaaaaaaaaa",
     question: "バナナはおやつですか",
@@ -68,7 +68,7 @@ export const allUnansweredQuestion: unansweredQuestion[] = [
 ];
 
 // 全ての回答済みの質問
-export const allAnsweredQuestion: answeredQuestion[] = [
+export const allAnsweredQuestionMock: answeredQuestion[] = [
   {
     id: "kkkkkkkkkkkkk",
     question: "バナナはおかずですか",
