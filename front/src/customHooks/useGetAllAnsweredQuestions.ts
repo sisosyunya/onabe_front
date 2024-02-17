@@ -31,9 +31,10 @@ const useGetAllAnsweredQuestions = () => {
     setAllAnsweredQuestions(await getAllData());
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     updateAllAnsweredQuestions();
-  }, [updateAllAnsweredQuestions]);
+  }, []);
 
   return { allAnsweredQuestions, updateAllAnsweredQuestions, loading };
 };

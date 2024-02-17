@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { unansweredQuestion } from "../type";
 import { allUnansweredQuestionMock } from "../mock";
 
-const url: string | null = null;
+const url: string | null = "http://3.112.223.9:8000/getall";
 
 const useGetAllUnansweredQuestions = () => {
-  const [allAnsweredQuestions, setAllAnsweredQuestions] = useState<unansweredQuestion[]>([]);
+  const [allUnansweredQuestions, setallUnansweredQuestions] = useState<unansweredQuestion[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const fetchAPI = async (url: string) => {
@@ -15,7 +15,7 @@ const useGetAllUnansweredQuestions = () => {
         throw new Error('Failed to fetch data');
       };
       const jsonData = await response.json();
-      return jsonData.data as unansweredQuestion[];
+      return jsonData as unansweredQuestion[];
     } catch (error) {
       return [];
     } finally {
@@ -28,14 +28,15 @@ const useGetAllUnansweredQuestions = () => {
   };
 
   const updateAllUnansweredQuestions = async () => {
-    setAllAnsweredQuestions(await getAllData());
+    setallUnansweredQuestions(await getAllData());
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     updateAllUnansweredQuestions();
-  }, [updateAllUnansweredQuestions]);
+  }, []);
 
-  return { allAnsweredQuestions, updateAllUnansweredQuestions, loading };
+  return { allUnansweredQuestions, updateAllUnansweredQuestions, loading };
 };
 
 export default useGetAllUnansweredQuestions;
