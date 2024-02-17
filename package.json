@@ -13,6 +13,8 @@
     "format:fix": "npm run format:fix --workspaces"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.18",
+    "@heroicons/react": "^2.1.1",
     "dotenv-cli": "^7.3.0",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0"

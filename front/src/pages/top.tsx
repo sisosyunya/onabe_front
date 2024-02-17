@@ -1,7 +1,8 @@
-import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import wanko from "@/assets/wanko.svg";
 import prompt from "@/assets/prompt.svg";
+import { DiscloseMenu } from "../components/disclose_menu";
 
 type FAQ = {
   question: string;
@@ -16,8 +17,14 @@ export function TopPage(): JSX.Element {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch("/api/faqs");
-      const faqs = await res.json();
+      // const res = await fetch("/api/faqs");
+      // const faqs = await res.json();
+      const faqs = [
+        {
+          question: "How to use this service?",
+          pageTitle: "how-to-use",
+        },
+      ]
       localStorage.setItem("faqs", JSON.stringify(faqs));
       setDefaultFaqs(faqs.slice(0, 5));
       setIsLoading(false);
@@ -78,7 +85,9 @@ export function TopPage(): JSX.Element {
                   key={faq.question}
                   className="pl-2 py-2 text-lg text-[#2B546A] list-inside list-square marker:text-[#57D5C1] hover:bg-[#F6F6F7] rounded-md"
                 >
-                  <Link to={`/pages/${faq.pageTitle}`}>{faq.question}</Link>
+                  {/* <Link to={`/pages/${faq.pageTitle}`}>{faq.question}</Link>
+                   */}
+                  <DiscloseMenu question={faq.question} answer={faq.pageTitle} />
                 </li>
               ))}
             </ul>
@@ -92,12 +101,13 @@ export function TopPage(): JSX.Element {
                   key={faq.question}
                   className="pl-2 py-2 text-lg text-[#2B546A] list-inside list-square marker:text-[#57D5C1] hover:bg-[#F6F6F7] rounded-md"
                 >
-                  <Link
+                  {/* <Link
                     to={`/pages/${faq.pageTitle}`}
                     data-test="question-title"
                   >
                     {faq.question}
-                  </Link>
+                  </Link> */}
+                  <DiscloseMenu question={faq.question} answer={faq.pageTitle} />
                 </li>
               ))}
             </ul>
