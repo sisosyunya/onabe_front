@@ -10,7 +10,7 @@ const useAddAnswer = () => {
     try {
       setLoading(true);
       setIsError(false);
-      const data = { id: questionId, answer: answer, answerAt: new Date() };
+      const data = { id: questionId, answer: answer, answeredAt: new Date() };
       const response = await fetch(url, {
         method: 'POST',
         headers: {
