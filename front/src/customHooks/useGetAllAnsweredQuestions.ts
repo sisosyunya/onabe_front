@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { answeredQuestion } from "../type";
 import { allAnsweredQuestionMock } from "../mock";
 
-const url: string | null = null;
+const url: string | null = "https://wkwk-hack.takayaman2180.net/getall";
 
 const useGetAllAnsweredQuestions = () => {
   const [allAnsweredQuestions, setAllAnsweredQuestions] = useState<answeredQuestion[]>([]);
