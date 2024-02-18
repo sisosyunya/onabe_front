@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { unansweredQuestion } from "../type";
 import { allUnansweredQuestionMock } from "../mock";
 
-const url: string | null = "http://3.112.223.9:8000/getall";
+const url: string | null = "https://wkwk-hack.takayaman2180.net/getall";
 
 const useGetAllUnansweredQuestions = () => {
   const [allUnansweredQuestions, setallUnansweredQuestions] = useState<unansweredQuestion[]>([]);

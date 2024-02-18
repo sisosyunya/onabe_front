@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { question } from "../type";
 import { allAnsweredQuestionMock } from "../mock";
 
-const url: string | null = "http://3.112.223.9:8000/idquestion";
+const url: string | null = "https://wkwk-hack.takayaman2180.net/idquestion";
 
 const useGetQuestion = ({ questionId }: { questionId: string }) => {
   const [question, setQuestion] = useState<question | undefined>(undefined);
