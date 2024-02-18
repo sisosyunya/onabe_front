@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 // import { Link } from "react-router-dom";
 import wanko from "@/assets/wanko.svg";
 import prompt from "@/assets/prompt.svg";
@@ -7,11 +7,40 @@ import useGetAllQuestions from "../customHooks/useGetAllQuestions";
 import {question} from "../type";
 import useWordPost from "../customHooks/useWordPost";
 
+type selectedField = "answered" | "unanswered" | "default";
+
 export function TopPage(): JSX.Element {
   const [input, setInput] = useState("");
   const [faqs, setFaqs] = useState<question[]>([]);
   const {allQuestions, loading} = useGetAllQuestions();
-  const  {wordPost} = useWordPost();
+  const {wordPost} = useWordPost();
+  const [selected, setSelected] = useState<selectedField>("default");
+  const [selectedData, setSelectedData] = useState<question[]>([]);
+
+  useEffect(() => {
+    const get = () => {
+      switch (selected) {
+        case "default":
+          return input === "" ? allQuestions : faqs;
+        case "answered":
+          return input === ""
+            ? allQuestions.filter(f => f.answer !== null)
+            : faqs.filter(f => f.answer !== null);
+        case "unanswered":
+          return input === ""
+            ? allQuestions.filter(f => f.answer === null)
+            : faqs.filter(f => f.answer === null);
+      }
+    };
+    setSelectedData(get());
+  }, [input, allQuestions, faqs, selected]);
+
+  const handleFilterAnswered = (selected: selectedField) => {
+    setSelected(selected === "answered" ? "default" : "answered");
+  };
+  const handleFilterUnanswered = (selected: selectedField) => {
+    setSelected(selected === "unanswered" ? "default" : "unanswered");
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInput(e.target.value);
@@ -54,14 +83,34 @@ export function TopPage(): JSX.Element {
           />
         </div>
       </div>
-      <div className="mt-6 px-4 py-6 bg-white h-[calc(100%-12rem)] overflow-scroll shadow">
+      <div className="flex flex-row mt-5 gap-2 justify-end mx-8">
+        <button
+          type="button"
+          onClick={() => {
+            handleFilterAnswered(selected);
+          }}
+          className={`${styles.button.commonField} ${selected === "answered" ? styles.button.selected : ""}`}
+        >
+          回答済み
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            handleFilterUnanswered(selected);
+          }}
+          className={`${styles.button.commonField} ${selected === "unanswered" ? styles.button.selected : ""}`}
+        >
+          未回答
+        </button>
+      </div>
+      <div className="mt-3 px-4 py-6 bg-white h-[calc(100%-12rem)] overflow-scroll shadow">
         {input === "" ? (
           <>
             <span className="text-[#2B546A] text-base">
               Frequently Asked Questions
             </span>
             <ul className="pt-4 space-y-2">
-              {allQuestions.reverse().map(faq => (
+              {selectedData.reverse().map(faq => (
                 <li
                   key={faq.question}
                   className=" text-lg text-[#2B546A] hover:bg-[#F6F6F7] rounded-md shadow-sm"
@@ -81,7 +130,7 @@ export function TopPage(): JSX.Element {
               <>
                 <span className="text-[#2B546A] text-base">{`${faqs.length} questions matched`}</span>
                 <ul className="pt-4">
-                  {faqs.reverse().map(faq => (
+                  {selectedData.reverse().map(faq => (
                     <li
                       key={faq.question}
                       className="pl-2 py-2 text-lg text-[#2B546A] list-inside list-square marker:text-[#57D5C1] hover:bg-[#F6F6F7] rounded-md"
@@ -107,7 +156,10 @@ export function TopPage(): JSX.Element {
                 <button
                   type="button"
                   className="bg-purple-300 py-3 px-8 rounded-full"
-                  onClick={() => {wordPost({keyword:input}); setInput("");}}
+                  onClick={() => {
+                    wordPost({keyword: input});
+                    setInput("");
+                  }}
                 >{`${input}についてもっと知りたい！！`}</button>
               </div>
             )}
@@ -117,3 +169,10 @@ export function TopPage(): JSX.Element {
     </>
   );
 }
+
+const styles = {
+  button: {
+    commonField: "border w-24 py-1 rounded-full",
+    selected: "bg-purple-700 text-white",
+  },
+};
