@@ -65,7 +65,7 @@ export function TopPage(): JSX.Element {
                   className=" text-lg text-[#2B546A] hover:bg-[#F6F6F7] rounded-md shadow-sm"
                 >
                   <DiscloseMenu
-                    question={faq.question}
+                    question={`${faq.answer ? "" : "[未回答]  "}${faq.question}`}
                     answer={faq.answer ?? "回答がありません。"}
                   />
                 </li>
@@ -88,7 +88,7 @@ export function TopPage(): JSX.Element {
                     {faq.question}
                   </Link> */}
                   <DiscloseMenu
-                    question={faq.question}
+                    question={`${faq.answer ? "" : "[未回答]  "}${faq.question}`}
                     answer={faq.answer ?? "未回答です。"}
                   />
                 </li>
