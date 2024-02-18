@@ -5,11 +5,13 @@ import prompt from "@/assets/prompt.svg";
 import {DiscloseMenu} from "../components/disclose_menu";
 import useGetAllQuestions from "../customHooks/useGetAllQuestions";
 import {question} from "../type";
+import useWordPost from "../customHooks/useWordPost";
 
 export function TopPage(): JSX.Element {
   const [input, setInput] = useState("");
   const [faqs, setFaqs] = useState<question[]>([]);
   const {allQuestions, loading} = useGetAllQuestions();
+  const  {wordPost} = useWordPost();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInput(e.target.value);
@@ -59,7 +61,7 @@ export function TopPage(): JSX.Element {
               Frequently Asked Questions
             </span>
             <ul className="pt-4 space-y-2">
-              {allQuestions.map(faq => (
+              {allQuestions.reverse().map(faq => (
                 <li
                   key={faq.question}
                   className=" text-lg text-[#2B546A] hover:bg-[#F6F6F7] rounded-md shadow-sm"
@@ -74,26 +76,39 @@ export function TopPage(): JSX.Element {
           </>
         ) : (
           <>
-            <span className="text-[#2B546A] text-base">{`${faqs.length} questions matched`}</span>
-            <ul className="pt-4">
-              {faqs.map(faq => (
-                <li
-                  key={faq.question}
-                  className="pl-2 py-2 text-lg text-[#2B546A] list-inside list-square marker:text-[#57D5C1] hover:bg-[#F6F6F7] rounded-md"
-                >
-                  {/* <Link
+            {faqs.length !== 0 ? (
+              <>
+                <span className="text-[#2B546A] text-base">{`${faqs.length} questions matched`}</span>
+                <ul className="pt-4">
+                  {faqs.reverse().map(faq => (
+                    <li
+                      key={faq.question}
+                      className="pl-2 py-2 text-lg text-[#2B546A] list-inside list-square marker:text-[#57D5C1] hover:bg-[#F6F6F7] rounded-md"
+                    >
+                      {/* <Link
                     to={`/pages/${faq.pageTitle}`}
                     data-test="question-title"
-                  >
+                    >
                     {faq.question}
                   </Link> */}
-                  <DiscloseMenu
-                    question={`${faq.answer ? "" : "[未回答]  "}${faq.question}`}
-                    answer={faq.answer ?? "未回答です。"}
-                  />
-                </li>
-              ))}
-            </ul>
+                      <DiscloseMenu
+                        question={`${faq.answer ? "" : "[未回答]  "}${faq.question}`}
+                        answer={faq.answer ?? "未回答です。"}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <div className="flex flex-col items-center gap-5">
+                <p>質問が見つかりませんでした。</p>
+                <button
+                  type="button"
+                  className="bg-purple-300 py-3 px-8 rounded-full"
+                  onClick={() => {wordPost({keyword:input}); setInput("");}}
+                >{`${input}についてもっと知りたい！！`}</button>
+              </div>
+            )}
           </>
         )}
       </div>
