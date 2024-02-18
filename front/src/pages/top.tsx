@@ -68,7 +68,8 @@ export function TopPage(): JSX.Element {
                 >
                   <DiscloseMenu
                     question={`${faq.answer ? "" : "[未回答]  "}${faq.question}`}
-                    answer={faq.answer ?? "回答がありません。"}
+                    answer={faq.answer}
+                    questionId={faq.id}
                   />
                 </li>
               ))}
@@ -93,7 +94,8 @@ export function TopPage(): JSX.Element {
                   </Link> */}
                       <DiscloseMenu
                         question={`${faq.answer ? "" : "[未回答]  "}${faq.question}`}
-                        answer={faq.answer ?? "未回答です。"}
+                        answer={faq.answer}
+                        questionId={faq.id}
                       />
                     </li>
                   ))}
