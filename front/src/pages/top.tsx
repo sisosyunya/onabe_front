@@ -1,10 +1,10 @@
-import { useState} from "react";
+import {useState} from "react";
 // import { Link } from "react-router-dom";
 import wanko from "@/assets/wanko.svg";
 import prompt from "@/assets/prompt.svg";
 import {DiscloseMenu} from "../components/disclose_menu";
 import useGetAllQuestions from "../customHooks/useGetAllQuestions";
-import { question } from "../type";
+import {question} from "../type";
 
 export function TopPage(): JSX.Element {
   const [input, setInput] = useState("");
@@ -18,9 +18,9 @@ export function TopPage(): JSX.Element {
       return;
     }
 
-    const filteredFaqs = allQuestions.filter((a)=>
-      a.question.includes(e.target.value)
-    )
+    const filteredFaqs = allQuestions.filter(a =>
+      a.question.includes(e.target.value),
+    );
     setFaqs(filteredFaqs);
   };
 
@@ -89,7 +89,7 @@ export function TopPage(): JSX.Element {
                   </Link> */}
                   <DiscloseMenu
                     question={faq.question}
-                    answer={faq.pageTitle}
+                    answer={faq.answer ?? "未回答です。"}
                   />
                 </li>
               ))}
