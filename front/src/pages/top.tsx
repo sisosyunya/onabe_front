@@ -4,15 +4,11 @@ import wanko from "@/assets/wanko.svg";
 import prompt from "@/assets/prompt.svg";
 import {DiscloseMenu} from "../components/disclose_menu";
 import useGetAllQuestions from "../customHooks/useGetAllQuestions";
-
-type FAQ = {
-  question: string;
-  pageTitle: string;
-};
+import { question } from "../type";
 
 export function TopPage(): JSX.Element {
   const [input, setInput] = useState("");
-  const [faqs, setFaqs] = useState<FAQ[]>([]);
+  const [faqs, setFaqs] = useState<question[]>([]);
   const {allQuestions, loading} = useGetAllQuestions();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -22,10 +18,9 @@ export function TopPage(): JSX.Element {
       return;
     }
 
-    const faqs = JSON.parse(localStorage.getItem("faqs")!);
-    const filteredFaqs = faqs.filter((faq: FAQ) =>
-      faq.question.toLowerCase().includes(e.target.value.toLowerCase()),
-    );
+    const filteredFaqs = allQuestions.filter((a)=>
+      a.question.includes(e.target.value)
+    )
     setFaqs(filteredFaqs);
   };
 
