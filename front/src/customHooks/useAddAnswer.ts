@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const url: string | null = "http://3.112.223.9:8000/addanswer";
+const url: string | null = "https://wkwk-hack.takayaman2180.net/addanswer";
 
 const useAddAnswer = () => {
   const [loading, setLoading] = useState<boolean>(false);
