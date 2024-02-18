@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { question } from "../type";
 import { allAnsweredQuestionMock } from "../mock";
 
-const url: string | null = "http://3.112.223.9:8000/getquestion";
+const url: string | null = "http://3.112.223.9:8000/idquestion";
 
 const useGetQuestion = ({ questionId }: { questionId: string }) => {
   const [question, setQuestion] = useState<question | undefined>(undefined);
@@ -12,7 +12,7 @@ const useGetQuestion = ({ questionId }: { questionId: string }) => {
     try {
       const data = { id: questionId }
       const response = await fetch(url, {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -22,7 +22,6 @@ const useGetQuestion = ({ questionId }: { questionId: string }) => {
         throw new Error('Failed to fetch data');
       };
       const jsonData = await response.json();
-      console.log(jsonData)
       return jsonData as question;
     } catch (error) {
       return undefined;
@@ -32,7 +31,7 @@ const useGetQuestion = ({ questionId }: { questionId: string }) => {
   };
 
   const getQuestion = async () => {
-    return url ? await fetchAPI(url) : allAnsweredQuestionMock.find(a=>a.answer === questionId);
+    return url ? await fetchAPI(url) : allAnsweredQuestionMock.find(a => a.answer === questionId);
   };
 
   const roadQuestion = async () => {
